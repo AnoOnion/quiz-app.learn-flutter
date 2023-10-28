@@ -1,15 +1,20 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
+
 import 'package:quiz_app/data/question_data.dart';
+import 'package:quiz_app/components/question_summary.dart';
 
 class ResultsScreen extends StatelessWidget {
   const ResultsScreen({
     super.key,
     required this.chooseAnswers,
+    required this.onRestart,
   });
 
   final List<String> chooseAnswers;
+  final void Function() onRestart;
 
-  List<Map<String, Object>> getSummaryData() {
+  List<Map<String, Object>> get summaryData {
     final List<Map<String, Object>> summary = [];
 
     for (var i = 0; i < chooseAnswers.length; i++) {
@@ -26,6 +31,10 @@ class ResultsScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final numCorrectQuestions = summaryData.where((data) {
+      return data['correct_answer'] == data['user_answer'];
+    }).length;
+
     return SizedBox(
       width: double.infinity,
       child: Container(
@@ -33,13 +42,27 @@ class ResultsScreen extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Text('You answered X out of Y question correctly !'),
+            Text(
+              'You answered $numCorrectQuestions out of ${questions.length} question correctly !',
+              textAlign: TextAlign.center,
+              style: GoogleFonts.lato(
+                color: Colors.white,
+                fontSize: 18,
+              ),
+            ),
             const SizedBox(height: 30),
-            Text('List of answers and questions...'),
+            QuestionSummary(summaryData),
             const SizedBox(height: 30),
-            TextButton(
-              onPressed: () {},
-              child: const Text('Restart Quiz !'),
+            TextButton.icon(
+              onPressed: onRestart,
+              icon: const Icon(Icons.refresh),
+              label: const Text('Restart Quiz !'),
+              style: TextButton.styleFrom(
+                foregroundColor: Colors.white,
+                textStyle: GoogleFonts.lato(
+                  color: Colors.white,
+                ),
+              ),
             ),
           ],
         ),

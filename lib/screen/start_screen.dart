@@ -39,6 +39,16 @@ class StartScreen extends StatelessWidget {
             label: const Text('Start Quiz'),
             style: OutlinedButton.styleFrom(
               foregroundColor: Colors.white,
+              padding: const EdgeInsets.symmetric(
+                vertical: 20,
+                horizontal: 40,
+              ),
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(20),
+              ),
+              textStyle: GoogleFonts.lato(
+                color: Colors.white,
+              ),
             ),
           ),
         ],

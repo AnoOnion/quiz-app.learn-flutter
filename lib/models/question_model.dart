@@ -4,7 +4,7 @@ class QuestionModel {
   final String text;
   final List<String> answers;
 
-  List<String> getShuffledAnswers() {
+  List<String> get shuffledAnswers {
     final shuffleList = List.of(answers);
     shuffleList.shuffle();
     return shuffleList;
